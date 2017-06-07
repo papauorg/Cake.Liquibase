@@ -8,6 +8,7 @@ namespace Cake.Liquibase.Helpers
 {
     public class ArgumentBuilder
     {
+        public static readonly string LIQUIBASE_ENTRY_POINT = "liquibase.integration.commandline.Main";
         public FilePath LiquibaseJar {get; private set;}
         public LiquibaseCommand Command { get; private set; }
         public LiquibaseSettings Settings { get; private set; }
@@ -29,16 +30,22 @@ namespace Cake.Liquibase.Helpers
         {
             var commandLineArgs = BuildCommandLineArgs();
             var javaOptions = BuildJavaOptions();
-            var arguments = $"liquibase.integration.commandline.Main {commandLineArgs} {Command.ToString()}";
-            if (!string.IsNullOrWhiteSpace(javaOptions)) 
-                arguments = $"{javaOptions} {arguments}";
             
-            return arguments;
+            return $"{javaOptions} {LIQUIBASE_ENTRY_POINT} {commandLineArgs} {Command}".Trim();
         }
 
         private string BuildJavaOptions()
         {
-            return "";
+            var javaOptions = "";
+
+            var classPath = string.Join(";", Settings.JavaSettings.Classpaths.Where(cp => !string.IsNullOrWhiteSpace(cp)).Select(cp => cp.Trim()));
+            if (!string.IsNullOrWhiteSpace(classPath))
+                javaOptions += $" -cp \"{classPath}\" ";
+
+            if (!string.IsNullOrWhiteSpace(Settings.JavaSettings.Options))
+                javaOptions += " " + Settings.JavaSettings.Options.Trim();
+
+            return javaOptions;
         }
 
         private string BuildCommandLineArgs()
