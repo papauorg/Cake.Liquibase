@@ -2,6 +2,7 @@
 using Cake.Core;
 using Cake.Core.Annotations;
 using Cake.Liquibase.Runner;
+using Cake.Liquibase.Runner.LiquibaseCommands;
 
 namespace Cake.Liquibase
 {
@@ -13,13 +14,13 @@ namespace Cake.Liquibase
     public static class LiquibaseAliases
     {
         /// <summary>
-        /// Executes liquibase using the 'update' cli parameter and the information in the liquibase options.
+        /// Executes liquibase using the 'update' cli parameter and the information in the liquibase settings.
         /// </summary>
         /// <returns>Liquibase return code</returns>
         [CakeMethodAlias]
-        public static int UpdateDatabase(this ICakeContext context, LiquibaseSettings liquibaseOptions)
+        public static int UpdateDatabase(this ICakeContext context, LiquibaseSettings liquibaseSettings)
         {
-            return new LiquibaseRunner(context.Environment, context.Log).Update(liquibaseOptions);
+            return new LiquibaseRunner(context.ProcessRunner, context.Log, context.Tools).Start(LiquibaseCommand.Update, liquibaseSettings);
         }
     }
 }
