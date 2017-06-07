@@ -33,7 +33,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new FilePath("somefile.jar")
                 ).Build();
 
-                arguments.Should().Contain("-cp \"./some/path/file.jar\"");
+                arguments.Should().StartWith("-cp \"./some/path/file.jar\"");
             }
 
             [Fact]
@@ -52,6 +52,39 @@ namespace Cake.Liquibase.Tests.Helpers
                 ).Build();
 
                 arguments.Should().NotContain("-cp");
+            }
+
+            [Fact]
+            public void Includes_Additional_Java_Options_If_Present()
+            {
+                var settings = new LiquibaseSettings();
+                settings.JavaSettings.Classpaths.Clear();
+                settings.JavaSettings.Options = "-Dsome.java.option=1";
+                
+                var arguments = new ArgumentBuilder(
+                    LiquibaseCommand.Update, 
+                    settings,    
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().StartWith("-Dsome.java.option=1");
+            }
+
+            [Fact]
+            public void Concatinates_Classpath_And_Additional_Java_Options()
+            {
+                var settings = new LiquibaseSettings();
+                settings.JavaSettings.Classpaths.Clear();
+                settings.JavaSettings.Classpaths.Add("./some/file.jar");
+                settings.JavaSettings.Options = "-Dsome.java.option=1";
+                
+                var arguments = new ArgumentBuilder(
+                    LiquibaseCommand.Update, 
+                    settings,    
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().StartWith("-cp \"./some/file.jar\" -Dsome.java.option=1");
             }
         }
     }

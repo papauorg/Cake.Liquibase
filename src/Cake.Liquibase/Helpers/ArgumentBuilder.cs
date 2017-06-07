@@ -40,7 +40,7 @@ namespace Cake.Liquibase.Helpers
 
             var classPath = string.Join(";", Settings.JavaSettings.Classpaths.Where(cp => !string.IsNullOrWhiteSpace(cp)).Select(cp => cp.Trim()));
             if (!string.IsNullOrWhiteSpace(classPath))
-                javaOptions += $" -cp \"{classPath}\" ";
+                javaOptions += $"-cp \"{classPath}\"";
 
             if (!string.IsNullOrWhiteSpace(Settings.JavaSettings.Options))
                 javaOptions += " " + Settings.JavaSettings.Options.Trim();
