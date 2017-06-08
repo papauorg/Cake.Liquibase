@@ -59,7 +59,7 @@ namespace Cake.Liquibase.Tests
             [Fact]
             public void Throws_If_LiquibaseSettings_Is_Null()
             {
-                Action startCall = () => _runner.Start(LiquibaseCommand.Update, null);
+                Action startCall = () => _runner.Start(Commands.Update, null);
                 startCall.ShouldThrow<ArgumentNullException>();
             }
             

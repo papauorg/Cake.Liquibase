@@ -37,7 +37,7 @@ namespace Cake.Liquibase.Runner
         /// Runs liquibase against a database using the update parameter.
         /// </summary>
         /// <returns></returns>
-        public int Start(LiquibaseCommand command, LiquibaseSettings settings)
+        public int Start(BaseCommand command, LiquibaseSettings settings)
         {
             if (command == null)
                 throw new ArgumentNullException("command");

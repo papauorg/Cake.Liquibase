@@ -10,10 +10,10 @@ namespace Cake.Liquibase.Helpers
     {
         public static readonly string LIQUIBASE_ENTRY_POINT = "liquibase.integration.commandline.Main";
         public FilePath LiquibaseJar {get; private set;}
-        public LiquibaseCommand Command { get; private set; }
+        public BaseCommand Command { get; private set; }
         public LiquibaseSettings Settings { get; private set; }
 
-        public ArgumentBuilder(LiquibaseCommand command, LiquibaseSettings settings, FilePath liquibaseJar)
+        public ArgumentBuilder(BaseCommand command, LiquibaseSettings settings, FilePath liquibaseJar)
         {
             if (settings == null) 
                 throw new ArgumentNullException("settings");

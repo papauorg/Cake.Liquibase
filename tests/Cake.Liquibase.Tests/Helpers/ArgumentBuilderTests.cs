@@ -1,10 +1,10 @@
 using Cake.Liquibase.Runner;
-using Cake.Liquibase.Runner.LiquibaseCommands;
 using Xunit;
 using Cake.Liquibase.Helpers;
 using NSubstitute;
 using FluentAssertions;
 using Cake.Core.IO;
+using Cake.Liquibase.Runner.LiquibaseCommands;
 
 namespace Cake.Liquibase.Tests.Helpers
 {
@@ -15,7 +15,7 @@ namespace Cake.Liquibase.Tests.Helpers
             [Fact]
             public void Maps_The_Command_Parameter_To_A_Liquibase_Command()
             {
-                var arguments = new ArgumentBuilder(LiquibaseCommand.Update, new LiquibaseSettings(), new FilePath("someFile.jar")).Build();
+                var arguments = new ArgumentBuilder(Commands.Update, new LiquibaseSettings(), new FilePath("someFile.jar")).Build();
 
                 arguments.Should().EndWith("update");
             }
@@ -28,7 +28,7 @@ namespace Cake.Liquibase.Tests.Helpers
                 settings.JavaSettings.Classpaths.Add("./some/path/file.jar");
                 
                 var arguments = new ArgumentBuilder(
-                    LiquibaseCommand.Update, 
+                    Commands.Update, 
                     settings,    
                     new FilePath("somefile.jar")
                 ).Build();
@@ -46,7 +46,7 @@ namespace Cake.Liquibase.Tests.Helpers
                 settings.JavaSettings.Classpaths.Add("\r\n");
                 
                 var arguments = new ArgumentBuilder(
-                    LiquibaseCommand.Update, 
+                    Commands.Update, 
                     settings,    
                     new FilePath("somefile.jar")
                 ).Build();
@@ -62,7 +62,7 @@ namespace Cake.Liquibase.Tests.Helpers
                 settings.JavaSettings.Options = "-Dsome.java.option=1";
                 
                 var arguments = new ArgumentBuilder(
-                    LiquibaseCommand.Update, 
+                    Commands.Update, 
                     settings,    
                     new FilePath("somefile.jar")
                 ).Build();
@@ -79,7 +79,7 @@ namespace Cake.Liquibase.Tests.Helpers
                 settings.JavaSettings.Options = "-Dsome.java.option=1";
                 
                 var arguments = new ArgumentBuilder(
-                    LiquibaseCommand.Update, 
+                    Commands.Update, 
                     settings,    
                     new FilePath("somefile.jar")
                 ).Build();

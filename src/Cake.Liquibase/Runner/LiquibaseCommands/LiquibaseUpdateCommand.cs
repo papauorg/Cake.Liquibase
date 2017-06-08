@@ -2,7 +2,7 @@ using System;
 
 namespace Cake.Liquibase.Runner.LiquibaseCommands
 {
-    public class LiquibaseUpdateCommand : LiquibaseCommand
+    public class LiquibaseUpdateCommand : BaseCommand
     {
         public override string ToString()
         {
