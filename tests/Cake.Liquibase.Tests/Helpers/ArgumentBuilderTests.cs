@@ -86,6 +86,168 @@ namespace Cake.Liquibase.Tests.Helpers
 
                 arguments.Should().StartWith("-cp \"./some/file.jar\" -Dsome.java.option=1");
             }
+            
+            [Fact]
+            public void Contains_The_Java_Entry_Class()
+            {
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    new LiquibaseSettings(), 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain(ArgumentBuilder.LIQUIBASE_ENTRY_POINT);
+            }
+
+            [Fact]
+            public void Contains_The_Quoted_Username()
+            {
+                var settings = new LiquibaseSettings(){
+                    Username = "user"
+                };
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--username=\"user\"");
+            }
+
+            [Fact]
+            public void Contains_The_Quoted_Password()
+            {
+                var settings = new LiquibaseSettings(){
+                    Password = "password"
+                };
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--password=\"password\"");
+            }
+
+            [Fact]
+            public void Contains_The_Quoted_ChangelogFile()
+            {
+                var settings = new LiquibaseSettings(){
+                    ChangeLogFile = "./ChangeLog.xml"
+                };
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--changeLog=\"./Changelog.xml\"");
+            }
+
+            [Fact]
+            public void Contains_The_Quoted_Url()
+            {
+                var settings = new LiquibaseSettings(){
+                    Url = "jdbc:sqlserver://server:1433;property=value"
+                };
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--url=\"dbc:sqlserver://server:1433;property=value");
+            }
+
+            [Fact]
+            public void Contains_The_Quoted_Context()
+            {
+                
+                var settings = new LiquibaseSettings();
+                settings.Contexts.Add("production");
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--context=\"production\"");
+            }
+            
+            [Fact]
+            public void Contains_All_Contexts_Quoted_And_Comma_Separated()
+            {
+                var settings = new LiquibaseSettings();
+                settings.Contexts.Add("production");
+                settings.Contexts.Add("test");
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--context=\"production,test\"");
+            }
+
+            [Fact]
+            public void Contains_The_Quoted_DefaultSchemaName()
+            {
+                var settings = new LiquibaseSettings(){
+                    DefaultSchemaName = "dbo"
+                };
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--defaultSchemaName=\"dbo\"");
+            }
+
+            [Fact]
+            public void Contains_The_Quoted_DefaultsFile()
+            {
+                var settings = new LiquibaseSettings(){
+                    DefaultsFile = "./defaults.properties"
+                };
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().Contain("--defaultSchemaName=\"./defaults.properties\"");
+            }
+
+            [Fact]
+            public void Does_Not_Contain_Parameters_If_The_Setting_Is_Empty()
+            {
+                var settings = new LiquibaseSettings();
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    settings, 
+                    new FilePath("somefile.jar")
+                ).Build();
+
+                arguments.Should().NotContain("--changeLogFile");
+                arguments.Should().NotContain("--username");
+                arguments.Should().NotContain("--password");
+                arguments.Should().NotContain("--url");
+                arguments.Should().NotContain("--driver");
+                arguments.Should().NotContain("--contexts");
+                arguments.Should().NotContain("--defaultSchemaName");
+                arguments.Should().NotContain("--defaultsFile");
+            }
+
         }
     }
 }

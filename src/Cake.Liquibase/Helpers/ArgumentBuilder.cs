@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text;
 using Cake.Core.IO;
 using Cake.Liquibase.Runner;
 using Cake.Liquibase.Runner.LiquibaseCommands;
@@ -30,7 +31,7 @@ namespace Cake.Liquibase.Helpers
         {
             var commandLineArgs = BuildCommandLineArgs();
             var javaOptions = BuildJavaOptions();
-            
+
             return $"{javaOptions} {LIQUIBASE_ENTRY_POINT} {commandLineArgs} {Command}".Trim();
         }
 
@@ -50,7 +51,42 @@ namespace Cake.Liquibase.Helpers
 
         private string BuildCommandLineArgs()
         {
-            return "";
+            var commandLineArgs = new StringBuilder();
+            
+            // Required parameters
+            commandLineArgs.AppendQuotedIfNotEmpty("--changeLogFile", Settings.ChangeLogFile);
+            commandLineArgs.AppendQuotedIfNotEmpty("--username", Settings.Username);
+            commandLineArgs.AppendQuotedIfNotEmpty("--password", Settings.Password);
+            commandLineArgs.AppendQuotedIfNotEmpty("--url", Settings.Url);
+            commandLineArgs.AppendQuotedIfNotEmpty("--driver", Settings.DriverClassName);
+
+            // Optional parameters
+            commandLineArgs.AppendQuotedIfNotEmpty("--contexts", String.Join(",", Settings.Contexts));
+            commandLineArgs.AppendQuotedIfNotEmpty("--defaultSchemaName", Settings.DefaultSchemaName);
+            commandLineArgs.AppendQuotedIfNotEmpty("--defaultsFile", Settings.DefaultsFile);
+
+            // not yet implemented specifically ...
+            if (!string.IsNullOrWhiteSpace(Settings.OtherParameters))
+                commandLineArgs.Append(" ").Append(Settings.OtherParameters);
+
+            return commandLineArgs.ToString().Trim();
+        }
+    }
+
+    internal static class ArgumentExtensions
+    {
+        internal static void AppendQuotedIfNotEmpty(this StringBuilder builder, string parameter, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+                builder.AppendIfNotEmpty(parameter, $"\"{value}\"");
+
+        }
+
+        internal static void AppendIfNotEmpty(this StringBuilder builder, string parameter, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(parameter))
+                builder.Append(" "); // keep distance to previous parameters
+                builder.Append($"{parameter}={value}");
         }
     }
 }
