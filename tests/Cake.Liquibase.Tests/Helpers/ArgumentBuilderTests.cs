@@ -144,7 +144,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new FilePath("somefile.jar")
                 ).Build();
 
-                arguments.Should().Contain("--changeLog=\"./Changelog.xml\"");
+                arguments.Should().Contain("--changeLogFile=\"./ChangeLog.xml\"");
             }
 
             [Fact]
@@ -160,7 +160,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new FilePath("somefile.jar")
                 ).Build();
 
-                arguments.Should().Contain("--url=\"dbc:sqlserver://server:1433;property=value");
+                arguments.Should().Contain("--url=\"jdbc:sqlserver://server:1433;property=value");
             }
 
             [Fact]
@@ -176,7 +176,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new FilePath("somefile.jar")
                 ).Build();
 
-                arguments.Should().Contain("--context=\"production\"");
+                arguments.Should().Contain("--contexts=\"production\"");
             }
             
             [Fact]
@@ -192,7 +192,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new FilePath("somefile.jar")
                 ).Build();
 
-                arguments.Should().Contain("--context=\"production,test\"");
+                arguments.Should().Contain("--contexts=\"production,test\"");
             }
 
             [Fact]
@@ -224,7 +224,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new FilePath("somefile.jar")
                 ).Build();
 
-                arguments.Should().Contain("--defaultSchemaName=\"./defaults.properties\"");
+                arguments.Should().Contain("--defaultsFile=\"./defaults.properties\"");
             }
 
             [Fact]

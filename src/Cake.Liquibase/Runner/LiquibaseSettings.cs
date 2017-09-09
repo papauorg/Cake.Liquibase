@@ -7,7 +7,7 @@ namespace Cake.Liquibase.Runner
     {
         public LiquibaseSettings()
         {
-            LiquibaseJar = "./**/tools/**/liquibase.jar";
+            LiquibaseJar = "./tools/**/liquibase*.jar";
             JavaSettings = new JavaSettings();
             Contexts = new List<string>();
         }
