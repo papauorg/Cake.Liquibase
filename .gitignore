@@ -237,3 +237,6 @@ _Pvt_Extensions
 
 # CAKE - C# Make
 tools
+
+# Build output artifacts
+output
