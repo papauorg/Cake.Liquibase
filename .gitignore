@@ -234,3 +234,6 @@ _Pvt_Extensions
 .fake/
 .vscode/launch.json
 .vscode/tasks.json
+
+# CAKE - C# Make
+tools
