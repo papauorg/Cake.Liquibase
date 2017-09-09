@@ -1,22 +1,40 @@
 var target = Argument("target", "Default");
+var solution = "./Cake.Liquibase.sln";
 
+Task("Clean")
+    .Does(() => {
+        DotNetCoreClean(solution);
+    });
+
+Task("Restore")
+    .Does(() => {
+        DotNetCoreRestore(solution);
+    });
 
 Task("Build")
-  .IsDependendOn("Clean")
-  .IsDependendOn("Restore")
-  .Does(() => {
-    var settings = new DotNetCoreBuildSettings
-    {
-        Framework = "netcoreapp1.0",
-        Configuration = "Release",
-        OutputDirectory = "./output/"
-    };
+    .IsDependentOn("Restore")
+    .Does(() => {
+        var settings = new DotNetCoreBuildSettings
+        {
+            Configuration = "Release",
+            OutputDirectory = "./output/"
+        };
 
-    DotNetCoreBuild("./src/*", settings);
-    DotNetCoreBuild("./tests/*", settings);
-  });
+        DotNetCoreBuild(solution, settings);
+    });
+
+Task("Test")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    var projectFiles = GetFiles("./tests/**/*.csproj");
+    foreach(var file in projectFiles)
+    {
+        DotNetCoreTest(file.FullPath);
+    }
+});
 
 Task("Default")
-  .IsDependendOn("Build");
+    .IsDependentOn("Test");
 
 RunTarget(target);
