@@ -38,7 +38,7 @@ namespace Cake.Liquibase.Tests.Helpers
             {
                 var settings = new LiquibaseSettings();
                 settings.JavaSettings.Classpaths.Clear();
-                settings.JavaSettings.Classpaths.Add("./some/path/file.jar");
+                settings.JavaSettings.Classpaths.Add("some/path/file.jar");
                 
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
@@ -47,7 +47,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     _globber
                 ).Build();
 
-                arguments.Should().StartWith("-cp \"./some/path/file.jar\"");
+                arguments.Should().StartWith("-cp \"some/path/file.jar");
             }
 
             [Fact]
@@ -66,7 +66,23 @@ namespace Cake.Liquibase.Tests.Helpers
                     _globber
                 ).Build();
 
-                arguments.Should().NotContain("-cp");
+                arguments.Should().Contain("-cp \"somefile.jar\""); // only contain the jar file, but nothing else in the -cp parameter
+            }
+
+            [Fact]
+            public void Includes_The_LiquibaseJar_File_In_The_Classpath()
+            {
+                var settings = new LiquibaseSettings();
+                settings.JavaSettings.Classpaths.Clear();
+
+                var arguments = new ArgumentBuilder(
+                    Commands.Update,
+                    settings,
+                    new FilePath("somefile.jar"),
+                    _globber
+                ).Build();
+
+                arguments.Should().Contain("-cp \"somefile.jar\"");
             }
 
             [Fact]
@@ -83,7 +99,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     _globber
                 ).Build();
 
-                arguments.Should().StartWith("-Dsome.java.option=1");
+                arguments.Should().Contain("-Dsome.java.option=1");
             }
 
             [Fact]
@@ -91,7 +107,7 @@ namespace Cake.Liquibase.Tests.Helpers
             {
                 var settings = new LiquibaseSettings();
                 settings.JavaSettings.Classpaths.Clear();
-                settings.JavaSettings.Classpaths.Add("./some/file.jar");
+                settings.JavaSettings.Classpaths.Add("some/file.jar");
                 settings.JavaSettings.Options = "-Dsome.java.option=1";
                 
                 var arguments = new ArgumentBuilder(
@@ -101,7 +117,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     _globber
                 ).Build();
 
-                arguments.Should().StartWith("-cp \"./some/file.jar\" -Dsome.java.option=1");
+                arguments.Should().StartWith("-cp \"some/file.jar;somefile.jar\" -Dsome.java.option=1");
             }
             
             [Fact]

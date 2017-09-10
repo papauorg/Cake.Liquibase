@@ -8,7 +8,7 @@ Task("Default")
             s.ChangeLogFile = "TestChangeLog.xml";
             s.Url = "jdbc:sqlite:exampledb.sqlite";
             s.JavaSettings.Classpaths.Add("./sqlite-jdbc-3.20.0.jar");
-            s.LiquibaseJar = "./liquibase/liquibase.jar";
+            s.LiquibaseJar = "./liquibase/liquibase*.jar";
         });
     });
 

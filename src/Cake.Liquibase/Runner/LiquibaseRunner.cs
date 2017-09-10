@@ -38,7 +38,6 @@ namespace Cake.Liquibase.Runner
             if (settings == null)
                 throw new ArgumentNullException("settings");
 
-            
             var liquibaseJar = ResolveLiquibaseJarFile(settings.LiquibaseJar);
             if (liquibaseJar == null)
                 throw new ArgumentException($"Liquibase jar file not found under '{settings.LiquibaseJar}'");
@@ -60,7 +59,18 @@ namespace Cake.Liquibase.Runner
 
         private string ResolveLiquibaseJarFile(string liquibaseJarPattern)
         {
-            var jarFile = Tools.Resolve(liquibaseJarPattern);
+            Path jarFile = null;
+
+            try
+            {
+                jarFile = Tools.Resolve(liquibaseJarPattern);
+            } 
+            catch (ArgumentException)
+            {
+                // illegal characters in path (when using *)
+                // fall back to globber.
+            }
+
             if (jarFile == null) {
                 // try file globber
                 jarFile = Globber.GetFiles(liquibaseJarPattern).FirstOrDefault();

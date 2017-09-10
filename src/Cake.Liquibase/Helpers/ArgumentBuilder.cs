@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cake.Core.IO;
@@ -35,9 +36,31 @@ namespace Cake.Liquibase.Helpers
         {
             var javaOptions = "";
 
-            var classPaths = Settings.JavaSettings.Classpaths?.SelectMany(c => Globber.GetFiles(c).Select(f => f.FullPath));
-            var classPath = string.Join(";", classPaths);
+            var classPaths = new List<string>();
+            foreach(string pathPattern in Settings?.JavaSettings?.Classpaths)
+            {
+                if (string.IsNullOrWhiteSpace(pathPattern))
+                {
+                    continue;
+                }
 
+                if (pathPattern == "."){
+                    classPaths.Add(pathPattern);
+                    continue;
+                }
+
+                var foundFiles = Globber.GetFiles(pathPattern)?.Select(f => f.FullPath);
+                if (foundFiles != null) 
+                {
+                    classPaths.AddRange(foundFiles);
+                }
+            }
+            
+            // add liquibase jar file to classpath
+            classPaths.Add(LiquibaseJar.FullPath);
+
+            var classPath = string.Join(";", classPaths);
+            
             if (!string.IsNullOrWhiteSpace(classPath))
                 javaOptions += $"-cp \"{classPath}\"";
 
