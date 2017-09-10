@@ -13,18 +13,14 @@ namespace Cake.Liquibase.Helpers
         public FilePath LiquibaseJar {get; private set;}
         public BaseCommand Command { get; private set; }
         public LiquibaseSettings Settings { get; private set; }
+        public IGlobber Globber {get; private set;}
 
-        public ArgumentBuilder(BaseCommand command, LiquibaseSettings settings, FilePath liquibaseJar)
+        public ArgumentBuilder(BaseCommand command, LiquibaseSettings settings, FilePath liquibaseJar, IGlobber globber)
         {
-            if (settings == null) 
-                throw new ArgumentNullException("settings");
-
-            if (liquibaseJar == null)
-                throw new ArgumentNullException("liquibaseJar");
-                
-            Command = command;
-            Settings = settings;
-            LiquibaseJar = liquibaseJar;
+            Globber = globber ?? throw new ArgumentNullException(nameof(globber));
+            Command = command ?? throw new ArgumentNullException(nameof(command));
+            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            LiquibaseJar = liquibaseJar ?? throw new ArgumentNullException(nameof(liquibaseJar));
         }
 
         public string Build()
@@ -39,7 +35,9 @@ namespace Cake.Liquibase.Helpers
         {
             var javaOptions = "";
 
-            var classPath = string.Join(";", Settings.JavaSettings.Classpaths.Where(cp => !string.IsNullOrWhiteSpace(cp)).Select(cp => cp.Trim()));
+            var classPaths = Settings.JavaSettings.Classpaths?.SelectMany(c => Globber.GetFiles(c).Select(f => f.FullPath));
+            var classPath = string.Join(";", classPaths);
+
             if (!string.IsNullOrWhiteSpace(classPath))
                 javaOptions += $"-cp \"{classPath}\"";
 

@@ -21,7 +21,7 @@ namespace Cake.Liquibase
         [CakeMethodAlias]
         public static int UpdateDatabase(this ICakeContext context, LiquibaseSettings liquibaseSettings)
         {
-            return new LiquibaseRunner(context.ProcessRunner, context.Log, context.Tools).Start(Commands.Update, liquibaseSettings);
+            return new LiquibaseRunner(context.ProcessRunner, context.Log, context.Tools, context.Globber).Start(Commands.Update, liquibaseSettings);
         }
 
         /// <summary>

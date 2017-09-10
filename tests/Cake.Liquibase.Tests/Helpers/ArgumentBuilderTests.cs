@@ -10,12 +10,25 @@ namespace Cake.Liquibase.Tests.Helpers
 {
     public class ArgumentBuilderTests
     {
+        protected IGlobber _globber;
+
+        public ArgumentBuilderTests()
+        {
+            _globber = new PassThroughGlobber();
+        }
+
         public class TheBuildMethod : ArgumentBuilderTests
         {
+
             [Fact]
             public void Maps_The_Command_Parameter_To_A_Liquibase_Command()
             {
-                var arguments = new ArgumentBuilder(Commands.Update, new LiquibaseSettings(), new FilePath("someFile.jar")).Build();
+                var arguments = new ArgumentBuilder(
+                    Commands.Update, 
+                    new LiquibaseSettings(), 
+                    new FilePath("someFile.jar"),
+                    _globber
+                ).Build();
 
                 arguments.Should().EndWith("update");
             }
@@ -30,7 +43,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings,    
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().StartWith("-cp \"./some/path/file.jar\"");
@@ -48,7 +62,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings,    
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().NotContain("-cp");
@@ -64,7 +79,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings,    
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().StartWith("-Dsome.java.option=1");
@@ -81,7 +97,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings,    
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().StartWith("-cp \"./some/file.jar\" -Dsome.java.option=1");
@@ -93,7 +110,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     new LiquibaseSettings(), 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain(ArgumentBuilder.LIQUIBASE_ENTRY_POINT);
@@ -109,7 +127,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--username=\"user\"");
@@ -125,7 +144,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--password=\"password\"");
@@ -141,7 +161,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--changeLogFile=\"./ChangeLog.xml\"");
@@ -157,7 +178,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--url=\"jdbc:sqlserver://server:1433;property=value");
@@ -173,7 +195,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--contexts=\"production\"");
@@ -189,7 +212,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--contexts=\"production,test\"");
@@ -205,7 +229,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--defaultSchemaName=\"dbo\"");
@@ -221,7 +246,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().Contain("--defaultsFile=\"./defaults.properties\"");
@@ -235,7 +261,8 @@ namespace Cake.Liquibase.Tests.Helpers
                 var arguments = new ArgumentBuilder(
                     Commands.Update, 
                     settings, 
-                    new FilePath("somefile.jar")
+                    new FilePath("somefile.jar"),
+                    _globber
                 ).Build();
 
                 arguments.Should().NotContain("--changeLogFile");

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
@@ -15,23 +16,15 @@ namespace Cake.Liquibase.Runner
         public ICakeLog Log { get; private set; }
         public IProcessRunner ProcessRunner { get; private set; }
         public IToolLocator Tools { get; private set; }
+        public IGlobber Globber {get; private set; }
 
-        public LiquibaseRunner(IProcessRunner processRunner, ICakeLog log, IToolLocator tools)
+        public LiquibaseRunner(IProcessRunner processRunner, ICakeLog log, IToolLocator tools, IGlobber globber)
         {
-            if (processRunner == null)
-                throw new ArgumentNullException("processRunner");
-
-            if (log == null)
-                throw new ArgumentNullException("log");
-
-            if (tools == null) 
-                throw new ArgumentNullException("tools");
-
-            this.ProcessRunner = processRunner;
-            this.Log = log;
-            this.Tools = tools;
+            ProcessRunner = processRunner ?? throw new ArgumentNullException(nameof(processRunner));
+            Log = log ?? throw new ArgumentNullException(nameof(log));
+            Tools = tools ?? throw new ArgumentNullException(nameof(tools));
+            Globber = globber ?? throw new ArgumentNullException(nameof(Globber));
         }
-
         
         /// <summary>
         /// Runs liquibase against a database using the update parameter.
@@ -45,7 +38,8 @@ namespace Cake.Liquibase.Runner
             if (settings == null)
                 throw new ArgumentNullException("settings");
 
-            var liquibaseJar = Tools.Resolve(settings.LiquibaseJar);
+            
+            var liquibaseJar = ResolveLiquibaseJarFile(settings.LiquibaseJar);
             if (liquibaseJar == null)
                 throw new ArgumentException($"Liquibase jar file not found under '{settings.LiquibaseJar}'");
             
@@ -53,7 +47,7 @@ namespace Cake.Liquibase.Runner
             if (javaExecutable == null)
                 throw new ArgumentException($"The java executable could not be found under '{settings.JavaSettings.Executable}'.");
             
-            var arguments = new Helpers.ArgumentBuilder(command, settings, liquibaseJar).Build();
+            var arguments = new Helpers.ArgumentBuilder(command, settings, liquibaseJar, Globber).Build();
             var processSettings = new ProcessSettings {
                 Arguments = arguments
             };
@@ -64,5 +58,15 @@ namespace Cake.Liquibase.Runner
             }
         }
 
+        private string ResolveLiquibaseJarFile(string liquibaseJarPattern)
+        {
+            var jarFile = Tools.Resolve(liquibaseJarPattern);
+            if (jarFile == null) {
+                // try file globber
+                jarFile = Globber.GetFiles(liquibaseJarPattern).FirstOrDefault();
+            }
+
+            return jarFile?.FullPath;
+        }
     }
 }
