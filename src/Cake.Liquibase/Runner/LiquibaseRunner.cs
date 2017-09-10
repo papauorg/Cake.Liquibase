@@ -53,6 +53,7 @@ namespace Cake.Liquibase.Runner
 
             using (var process = this.ProcessRunner.Start(javaExecutable, processSettings))
             {
+                process.WaitForExit();
                 return process.GetExitCode();
             }
         }

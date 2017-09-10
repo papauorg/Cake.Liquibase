@@ -116,8 +116,11 @@ namespace Cake.Liquibase.Tests.Helpers
                     new FilePath("somefile.jar"),
                     _globber
                 ).Build();
-
-                arguments.Should().StartWith("-cp \"some/file.jar;somefile.jar\" -Dsome.java.option=1");
+                
+                arguments.Should()
+                    .StartWith("-cp \"some/file.jar")
+                    .And.Contain("somefile.jar")
+                    .And.Contain("-Dsome.java.option=1");
             }
             
             [Fact]

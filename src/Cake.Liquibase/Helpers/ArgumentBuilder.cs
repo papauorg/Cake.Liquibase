@@ -59,7 +59,7 @@ namespace Cake.Liquibase.Helpers
             // add liquibase jar file to classpath
             classPaths.Add(LiquibaseJar.FullPath);
 
-            var classPath = string.Join(";", classPaths);
+            var classPath = string.Join(System.IO.Path.PathSeparator.ToString(), classPaths);
             
             if (!string.IsNullOrWhiteSpace(classPath))
                 javaOptions += $"-cp \"{classPath}\"";
