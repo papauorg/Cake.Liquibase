@@ -1,6 +1,7 @@
 ﻿using System;
 using Cake.Core;
 using Cake.Core.Annotations;
+using Cake.Core.Diagnostics;
 using Cake.Liquibase.Runner;
 using Cake.Liquibase.Runner.LiquibaseCommands;
 
@@ -39,7 +40,12 @@ namespace Cake.Liquibase
                 liquibaseSettingsAction(liquibaseSettings);
             }
 
-            return UpdateDatabase(context, liquibaseSettings);
+            var result = UpdateDatabase(context, liquibaseSettings);
+            if (result != 0)
+            {
+                throw new InvalidOperationException("Error running liquibase");
+            }
+            return result;
         }
     }
 }
