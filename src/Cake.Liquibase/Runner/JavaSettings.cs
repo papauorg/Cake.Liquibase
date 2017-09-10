@@ -21,7 +21,7 @@ namespace Cake.Liquibase.Runner
             get{
                 if (string.IsNullOrWhiteSpace(_executable))
                 {
-                    _executable = "java.exe";
+                    _executable = "java";
                 }
                 return _executable;
             }
