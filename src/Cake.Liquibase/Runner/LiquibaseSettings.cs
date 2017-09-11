@@ -77,5 +77,11 @@ namespace Cake.Liquibase.Runner
         /// </summary>
         /// <returns></returns>
         public string OtherParameters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the working directory for running liquibase.
+        /// Defaults to the cake working directory if null.
+        /// </summary>
+        public DirectoryPath WorkingDirectory {get; set; }
     }
 }

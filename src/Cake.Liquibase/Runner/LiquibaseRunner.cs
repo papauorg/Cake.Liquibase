@@ -47,15 +47,27 @@ namespace Cake.Liquibase.Runner
                 throw new ArgumentException($"The java executable could not be found under '{settings.JavaSettings.Executable}'.");
             
             var arguments = new Helpers.ArgumentBuilder(command, settings, liquibaseJar, Globber).Build();
-            var processSettings = new ProcessSettings {
-                Arguments = arguments
-            };
-
+            var processSettings = GetProcessSettings(arguments, settings);
+            
             using (var process = this.ProcessRunner.Start(javaExecutable, processSettings))
             {
                 process.WaitForExit();
                 return process.GetExitCode();
             }
+        }
+
+        private ProcessSettings GetProcessSettings(string arguments, LiquibaseSettings settings)
+        {
+            var processSettings = new ProcessSettings {
+                Arguments = arguments
+            };
+
+            if (settings.WorkingDirectory != null)
+            {
+                processSettings.UseWorkingDirectory(settings.WorkingDirectory);
+            }
+
+            return processSettings;
         }
 
         private string ResolveLiquibaseJarFile(string liquibaseJarPattern)
