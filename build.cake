@@ -26,13 +26,22 @@ Task("Build")
 Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
-{
-    var projectFiles = GetFiles("./tests/**/*.csproj");
-    foreach(var file in projectFiles)
     {
-        DotNetCoreTest(file.FullPath);
-    }
-});
+        var projectFiles = GetFiles("./tests/**/*.csproj");
+        foreach(var file in projectFiles)
+        {
+            DotNetCoreTest(file.FullPath);
+        }
+    });
+
+Task("Pack")
+    .IsDependentOn("Test")
+    .Does(() => {
+        DotNetCorePack("./src/Cake.Liquibase/Cake.Liquibase.csproj", new DotNetCorePackSettings {
+            OutputDirectory = "./nuget/",
+            NoBuild = true
+        });
+    });
 
 Task("Default")
     .IsDependentOn("Test");
