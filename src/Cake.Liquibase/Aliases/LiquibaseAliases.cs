@@ -22,7 +22,14 @@ namespace Cake.Liquibase
         [CakeMethodAlias]
         public static int UpdateDatabase(this ICakeContext context, LiquibaseSettings liquibaseSettings)
         {
-            return new LiquibaseRunner(context.ProcessRunner, context.Log, context.Tools, context.Globber).Start(Commands.Update, liquibaseSettings);
+            var result =  new LiquibaseRunner(context.ProcessRunner, context.Log, context.Tools, context.Globber, context.Environment.Platform)
+                .Start(Commands.Update, liquibaseSettings);
+
+            if (result != 0)
+            {
+                throw new InvalidOperationException("Error running liquibase");
+            }
+            return result;
         }
 
         /// <summary>
@@ -40,12 +47,7 @@ namespace Cake.Liquibase
                 liquibaseSettingsAction(liquibaseSettings);
             }
 
-            var result = UpdateDatabase(context, liquibaseSettings);
-            if (result != 0)
-            {
-                throw new InvalidOperationException("Error running liquibase");
-            }
-            return result;
+            return UpdateDatabase(context, liquibaseSettings);
         }
     }
 }

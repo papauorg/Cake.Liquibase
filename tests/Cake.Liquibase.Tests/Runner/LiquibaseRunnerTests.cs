@@ -21,6 +21,7 @@ namespace Cake.Liquibase.Tests
         protected ICakeLog _cakeLog;
         protected IToolLocator _cakeTools;
         protected readonly IGlobber _globber;
+        protected readonly ICakePlatform _platform;
 
         public LiquibaseRunnerTests()
         {
@@ -28,9 +29,10 @@ namespace Cake.Liquibase.Tests
             _cakeLog = Substitute.For<ICakeLog>();
             _cakeTools = Substitute.For<IToolLocator>();
             _globber = new PassThroughGlobber();
-            
+            _platform = Substitute.For<ICakePlatform>();
+    
             _settings = new LiquibaseSettings();
-            _runner = new LiquibaseRunner(_processRunner, _cakeLog, _cakeTools, _globber);
+            _runner = new LiquibaseRunner(_processRunner, _cakeLog, _cakeTools, _globber, _platform);
         }
 
         public class TheConstructor : LiquibaseRunnerTests
@@ -38,21 +40,35 @@ namespace Cake.Liquibase.Tests
             [Fact]
             public void Throws_If_ProcessRunner_Is_Null()
             {
-                Action instantiation = () => new LiquibaseRunner(null, _cakeLog, _cakeTools, _globber);
+                Action instantiation = () => new LiquibaseRunner(null, _cakeLog, _cakeTools, _globber, _platform);
                 instantiation.ShouldThrow<ArgumentNullException>();
             }
 
             [Fact]
             public void Throws_If_Log_Is_Null()
             {
-                Action instantiation = () => new LiquibaseRunner(_processRunner, null, _cakeTools, _globber);
+                Action instantiation = () => new LiquibaseRunner(_processRunner, null, _cakeTools, _globber, _platform);
                 instantiation.ShouldThrow<ArgumentNullException>();
             }
 
             [Fact]
             public void Throws_If_Tools_Is_Null()
             {
-                Action instantiation = () => new LiquibaseRunner(_processRunner, _cakeLog, null, _globber);
+                Action instantiation = () => new LiquibaseRunner(_processRunner, _cakeLog, null, _globber, _platform);
+                instantiation.ShouldThrow<ArgumentNullException>();
+            }
+
+            [Fact]
+            public void Throws_If_Globber_Is_Null()
+            {
+                Action instantiation = () => new LiquibaseRunner(_processRunner, _cakeLog, _cakeTools, null, _platform);
+                instantiation.ShouldThrow<ArgumentNullException>();
+            }
+
+            [Fact]
+            public void Throws_If_Environment_Is_Null()
+            {
+                Action instantiation = () => new LiquibaseRunner(_processRunner, _cakeLog, _cakeTools, _globber, null);
                 instantiation.ShouldThrow<ArgumentNullException>();
             }
         }

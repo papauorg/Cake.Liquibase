@@ -17,13 +17,15 @@ namespace Cake.Liquibase.Runner
         public IProcessRunner ProcessRunner { get; private set; }
         public IToolLocator Tools { get; private set; }
         public IGlobber Globber {get; private set; }
+        public ICakePlatform Platform {get; private set;}
 
-        public LiquibaseRunner(IProcessRunner processRunner, ICakeLog log, IToolLocator tools, IGlobber globber)
+        public LiquibaseRunner(IProcessRunner processRunner, ICakeLog log, IToolLocator tools, IGlobber globber, ICakePlatform platform)
         {
             ProcessRunner = processRunner ?? throw new ArgumentNullException(nameof(processRunner));
             Log = log ?? throw new ArgumentNullException(nameof(log));
             Tools = tools ?? throw new ArgumentNullException(nameof(tools));
             Globber = globber ?? throw new ArgumentNullException(nameof(Globber));
+            Platform = platform ?? throw new ArgumentNullException(nameof(platform));
         }
         
         /// <summary>
@@ -42,10 +44,9 @@ namespace Cake.Liquibase.Runner
             if (liquibaseJar == null)
                 throw new ArgumentException($"Liquibase jar file not found under '{settings.LiquibaseJar}'");
             
-            var javaExecutable = Tools.Resolve(settings.JavaSettings.Executable);
-            if (javaExecutable == null)
-                throw new ArgumentException($"The java executable could not be found under '{settings.JavaSettings.Executable}'.");
             
+            var javaExecutable = GetJavaExecutable(settings); 
+                        
             var arguments = new Helpers.ArgumentBuilder(command, settings, liquibaseJar, Globber).Build();
             var processSettings = GetProcessSettings(arguments, settings);
             
@@ -54,6 +55,22 @@ namespace Cake.Liquibase.Runner
                 process.WaitForExit();
                 return process.GetExitCode();
             }
+        }
+
+        private FilePath GetJavaExecutable(LiquibaseSettings settings)
+        {
+            string executableToResolve = settings.JavaSettings.Executable;
+            if (string.IsNullOrEmpty(executableToResolve))
+            {
+                executableToResolve = Platform.IsUnix() ? "java" : "java.exe";
+            }
+
+            var javaExecutable = Tools.Resolve(executableToResolve);
+
+            if (javaExecutable == null)
+                throw new ArgumentException($"The java executable could not be found under '{executableToResolve}'.");
+
+            return javaExecutable;
         }
 
         private ProcessSettings GetProcessSettings(string arguments, LiquibaseSettings settings)

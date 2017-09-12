@@ -5,7 +5,6 @@ namespace Cake.Liquibase.Runner
     public class JavaSettings
     {
         private string _options;
-        private string _executable;
 
         public JavaSettings()
         {
@@ -14,22 +13,9 @@ namespace Cake.Liquibase.Runner
         }
 
         /// <summary>
-        /// Defines where the java executable can be found. Defaults to java.exe (should be found via PATH variable).
+        /// Defines where the java executable can be found. 
         /// </summary>
-        public string Executable
-        {
-            get{
-                if (string.IsNullOrWhiteSpace(_executable))
-                {
-                    _executable = "java";
-                }
-                return _executable;
-            }
-            set
-            {
-                _executable = value;
-            }
-        }
+        public string Executable {get; set;}
 
         /// <summary>
         /// Class path that should be added to the liquibase call. Defaults to ".".
