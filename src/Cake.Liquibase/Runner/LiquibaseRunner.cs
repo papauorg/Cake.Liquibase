@@ -50,11 +50,9 @@ namespace Cake.Liquibase.Runner
             var arguments = new Helpers.ArgumentBuilder(command, settings, liquibaseJar, Globber).Build();
             var processSettings = GetProcessSettings(arguments, settings);
             
-            using (var process = this.ProcessRunner.Start(javaExecutable, processSettings))
-            {
-                process.WaitForExit();
-                return process.GetExitCode();
-            }
+            var process = this.ProcessRunner.Start(javaExecutable, processSettings);
+            process.WaitForExit();
+            return process.GetExitCode();
         }
 
         private FilePath GetJavaExecutable(LiquibaseSettings settings)
