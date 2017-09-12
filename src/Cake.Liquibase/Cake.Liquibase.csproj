@@ -14,6 +14,6 @@
     <RepositoryUrl>https://github.com/papauorg/Cake.Liquibase</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.19.5" />
+    <PackageReference Include="Cake.Common" Version="0.21.1" />
   </ItemGroup>
 </Project>
