@@ -4,6 +4,7 @@ using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
+using Cake.Liquibase;
 using Cake.Liquibase.Runner.LiquibaseCommands;
 
 namespace Cake.Liquibase.Runner

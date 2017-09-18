@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Cake.Core.IO;
 
-namespace Cake.Liquibase.Runner
+namespace Cake.Liquibase
 {
     public class LiquibaseSettings
     {

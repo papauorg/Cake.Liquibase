@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cake.Core.IO;
+using Cake.Liquibase;
 using Cake.Liquibase.Runner;
 using Cake.Liquibase.Runner.LiquibaseCommands;
 

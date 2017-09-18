@@ -2,6 +2,7 @@
 using Cake.Core;
 using Cake.Core.Annotations;
 using Cake.Core.Diagnostics;
+using Cake.Liquibase;
 using Cake.Liquibase.Runner;
 using Cake.Liquibase.Runner.LiquibaseCommands;
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Cake.Liquibase.Runner
+namespace Cake.Liquibase
 {
     public class JavaSettings
     {
