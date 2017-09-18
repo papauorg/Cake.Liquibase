@@ -6,6 +6,7 @@ using Cake.Core.IO;
 using Cake.Core.Tooling;
 using Cake.Liquibase;
 using Cake.Liquibase.Runner.LiquibaseCommands;
+using System.Collections.Generic;
 
 namespace Cake.Liquibase.Runner
 {
@@ -53,7 +54,25 @@ namespace Cake.Liquibase.Runner
             
             var process = this.ProcessRunner.Start(javaExecutable, processSettings);
             process.WaitForExit();
-            return process.GetExitCode();
+            var messages = process.GetStandardError();
+            var exitCode = process.GetExitCode();
+
+            RedirectErrorOutput(messages, exitCode);
+
+            return exitCode;
+        }
+
+        private void RedirectErrorOutput(IEnumerable<string> messages, int exitCode)
+        {
+            LogLevel level = LogLevel.Information;
+            if (exitCode != 0) {
+                level = LogLevel.Error;
+            }
+
+            foreach (string message in messages)
+            {
+                Log.Write(Verbosity.Minimal, level, message, null);
+            }
         }
 
         private FilePath GetJavaExecutable(LiquibaseSettings settings)
@@ -75,7 +94,8 @@ namespace Cake.Liquibase.Runner
         private ProcessSettings GetProcessSettings(string arguments, LiquibaseSettings settings)
         {
             var processSettings = new ProcessSettings {
-                Arguments = arguments
+                Arguments = arguments,
+                RedirectStandardError = true
             };
 
             if (settings.WorkingDirectory != null)
