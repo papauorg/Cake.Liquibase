@@ -14,18 +14,22 @@ As of now there is only a preview NuGet package available. An official one will 
 
 ## Usage
 ```csharp
-// addin not yet available via nuget
 #addin "Cake.Liquibase"
 
 var target = Argument("target", "Default");
 
 Task("Default")
     .Does(() => {
+        // Install Liquibase.Cli package for the liquibase executables (or include it in the packages.config) 
+        NuGetInstall("Liquibase.Cli", new NuGetInstallSettings {
+            Version  = "3.3.5",
+            OutputDirectory = "./tools"
+        });
+
         UpdateDatabase(s => {
             s.ChangeLogFile = "YourChangeLog.xml";
             s.Url = "jdbc:sqlite:exampledb.sqlite";
             s.JavaSettings.Classpaths.Add("./sqlite-jdbc-3.20.0.jar"); // additional drivers / jar files
-            s.LiquibaseJar = "./liquibase/liquibase.jar"; // path to your liquibase jar file
         });
     });
 
