@@ -8,6 +8,7 @@
     <PackageReference Include="NSubstitute" Version="2.0.3" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="Cake.Common" Version="0.28.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Cake.Liquibase\Cake.Liquibase.csproj" />
