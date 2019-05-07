@@ -6,9 +6,14 @@ namespace Cake.Liquibase.Tests.Helpers
 {
     public class PassThroughGlobber : IGlobber
     {
-        IEnumerable<Path> IGlobber.Match(string pattern, Func<IDirectory, bool> predicate)
+        public IEnumerable<Path> Match(string pattern, GlobberSettings settings)
         {
             return new FilePath[] { new FilePath(pattern) };
+        }
+
+        IEnumerable<Path> IGlobber.Match(string pattern, Func<IDirectory, bool> predicate)
+        {
+           return new FilePath[] { new FilePath(pattern) }; 
         }
     }
 }

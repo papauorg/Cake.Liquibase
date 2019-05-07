@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Cake.Core.IO;
+using Cake.Core.Tooling;
 
 namespace Cake.Liquibase
 {
-    public class LiquibaseSettings
+    public class LiquibaseSettings : ToolSettings
     {
-        public LiquibaseSettings()
+        public LiquibaseSettings() : base()
         {
             LiquibaseJar = "./tools/**/liquibase*.jar";
             JavaSettings = new JavaSettings();
@@ -71,17 +72,5 @@ namespace Cake.Liquibase
         /// </summary>
         /// <returns></returns>
         public List<string> Contexts {get; private set; }
-
-        /// <summary>
-        /// Can be used for settings that are not yet implemented separately.
-        /// </summary>
-        /// <returns></returns>
-        public string OtherParameters { get; set; }
-
-        /// <summary>
-        /// Gets or sets the working directory for running liquibase.
-        /// Defaults to the cake working directory if null.
-        /// </summary>
-        public DirectoryPath WorkingDirectory {get; set; }
     }
 }
