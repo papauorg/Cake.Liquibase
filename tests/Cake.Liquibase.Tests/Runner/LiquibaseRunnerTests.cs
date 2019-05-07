@@ -41,35 +41,35 @@ namespace Cake.Liquibase.Tests
             public void Throws_If_ProcessRunner_Is_Null()
             {
                 Action instantiation = () => new LiquibaseRunner(null, _cakeLog, _cakeTools, _globber, _platform);
-                instantiation.ShouldThrow<ArgumentNullException>();
+                instantiation.Should().Throw<ArgumentNullException>();
             }
 
             [Fact]
             public void Throws_If_Log_Is_Null()
             {
                 Action instantiation = () => new LiquibaseRunner(_processRunner, null, _cakeTools, _globber, _platform);
-                instantiation.ShouldThrow<ArgumentNullException>();
+                instantiation.Should().Throw<ArgumentNullException>();
             }
 
             [Fact]
             public void Throws_If_Tools_Is_Null()
             {
                 Action instantiation = () => new LiquibaseRunner(_processRunner, _cakeLog, null, _globber, _platform);
-                instantiation.ShouldThrow<ArgumentNullException>();
+                instantiation.Should().Throw<ArgumentNullException>();
             }
 
             [Fact]
             public void Throws_If_Globber_Is_Null()
             {
                 Action instantiation = () => new LiquibaseRunner(_processRunner, _cakeLog, _cakeTools, null, _platform);
-                instantiation.ShouldThrow<ArgumentNullException>();
+                instantiation.Should().Throw<ArgumentNullException>();
             }
 
             [Fact]
             public void Throws_If_Environment_Is_Null()
             {
                 Action instantiation = () => new LiquibaseRunner(_processRunner, _cakeLog, _cakeTools, _globber, null);
-                instantiation.ShouldThrow<ArgumentNullException>();
+                instantiation.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -79,7 +79,7 @@ namespace Cake.Liquibase.Tests
             public void Throws_If_LiquibaseSettings_Is_Null()
             {
                 Action startCall = () => _runner.Start(Commands.Update, null);
-                startCall.ShouldThrow<ArgumentNullException>();
+                startCall.Should().Throw<ArgumentNullException>();
             }
             
         }

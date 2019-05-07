@@ -1,0 +1,21 @@
+pull_requests:
+  do_not_increment_build_number: true
+
+image: Visual Studio 2017
+
+build_script:
+  - ps: ./build.ps1 -Target Pack
+
+test_script:
+- sh: cd ./tests/BuildScript && ./build.sh
+
+artifacts:
+- path: nuget/*.nupkg
+  name: NuGet
+
+deploy:
+- provider: NuGet
+  api_key:
+    secure: L+KXfvRzHCjSwuo4KSLy9CaMeWCnIM+5uVco7njYCTTIV8J6R7ReqzePoGTTr+vS
+  on:
+    branch: master

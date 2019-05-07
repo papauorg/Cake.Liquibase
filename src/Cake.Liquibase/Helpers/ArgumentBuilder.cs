@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Cake.Core;
 using Cake.Core.IO;
 using Cake.Liquibase;
 using Cake.Liquibase.Runner;
@@ -27,16 +28,18 @@ namespace Cake.Liquibase.Helpers
 
         public string Build()
         {
-            var commandLineArgs = BuildCommandLineArgs();
-            var javaOptions = BuildJavaOptions();
+            var argumentBuilder = new ProcessArgumentBuilder();
 
-            return $"{javaOptions} {LIQUIBASE_ENTRY_POINT} {commandLineArgs} {Command}".Trim();
+            AppendJavaOptions(argumentBuilder);
+            argumentBuilder.Append(LIQUIBASE_ENTRY_POINT);
+            AppendCommandLineArgs(argumentBuilder);
+            argumentBuilder.Append(Command.ToString());
+
+            return argumentBuilder.Render();
         }
 
-        private string BuildJavaOptions()
+        private void AppendJavaOptions(ProcessArgumentBuilder builder)
         {
-            var javaOptions = "";
-
             var classPaths = new List<string>();
             foreach(string pathPattern in Settings?.JavaSettings?.Classpaths)
             {
@@ -63,51 +66,41 @@ namespace Cake.Liquibase.Helpers
             var classPath = string.Join(System.IO.Path.PathSeparator.ToString(), classPaths);
             
             if (!string.IsNullOrWhiteSpace(classPath))
-                javaOptions += $"-cp \"{classPath}\"";
+                builder.Append($"-cp \"{classPath}\"");
 
             if (!string.IsNullOrWhiteSpace(Settings.JavaSettings.Options))
-                javaOptions += " " + Settings.JavaSettings.Options.Trim();
-
-            return javaOptions;
+                builder.Append(Settings.JavaSettings.Options.Trim());
         }
 
-        private string BuildCommandLineArgs()
+        private void AppendCommandLineArgs(ProcessArgumentBuilder builder)
         {
-            var commandLineArgs = new StringBuilder();
-            
             // Required parameters
-            commandLineArgs.AppendQuotedIfNotEmpty("--changeLogFile", Settings.ChangeLogFile);
-            commandLineArgs.AppendQuotedIfNotEmpty("--username", Settings.Username);
-            commandLineArgs.AppendQuotedIfNotEmpty("--password", Settings.Password);
-            commandLineArgs.AppendQuotedIfNotEmpty("--url", Settings.Url);
-            commandLineArgs.AppendQuotedIfNotEmpty("--driver", Settings.DriverClassName);
+            builder.AppendQuotedIfNotEmpty("--changeLogFile", Settings.ChangeLogFile);
+            builder.AppendQuotedIfNotEmpty("--username", Settings.Username);
+            builder.AppendQuotedIfNotEmpty("--password", Settings.Password);
+            builder.AppendQuotedIfNotEmpty("--url", Settings.Url);
+            builder.AppendQuotedIfNotEmpty("--driver", Settings.DriverClassName);
 
             // Optional parameters
-            commandLineArgs.AppendQuotedIfNotEmpty("--contexts", String.Join(",", Settings.Contexts));
-            commandLineArgs.AppendQuotedIfNotEmpty("--defaultSchemaName", Settings.DefaultSchemaName);
-            commandLineArgs.AppendQuotedIfNotEmpty("--defaultsFile", Settings.DefaultsFile);
+            builder.AppendQuotedIfNotEmpty("--contexts", String.Join(",", Settings.Contexts));
+            builder.AppendQuotedIfNotEmpty("--defaultSchemaName", Settings.DefaultSchemaName);
+            builder.AppendQuotedIfNotEmpty("--defaultsFile", Settings.DefaultsFile);
 
-            // not yet implemented specifically ...
-            if (!string.IsNullOrWhiteSpace(Settings.OtherParameters))
-                commandLineArgs.Append(" ").Append(Settings.OtherParameters);
-
-            return commandLineArgs.ToString().Trim();
+            Settings.ArgumentCustomization?.Invoke(builder);
         }
     }
 
     internal static class ArgumentExtensions
     {
-        internal static void AppendQuotedIfNotEmpty(this StringBuilder builder, string parameter, string value)
+        internal static void AppendQuotedIfNotEmpty(this ProcessArgumentBuilder builder, string parameter, string value)
         {
             if (!string.IsNullOrWhiteSpace(value))
                 builder.AppendIfNotEmpty(parameter, $"\"{value}\"");
-
         }
 
-        internal static void AppendIfNotEmpty(this StringBuilder builder, string parameter, string value)
+        internal static void AppendIfNotEmpty(this ProcessArgumentBuilder builder, string parameter, string value)
         {
             if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrWhiteSpace(parameter))
-                builder.Append(" "); // keep distance to previous parameters
                 builder.Append($"{parameter}={value}");
         }
     }

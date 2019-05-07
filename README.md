@@ -40,5 +40,7 @@ When not specifying a java executable the PATH is searched for "java" and it is 
 ## Limitations
 This is currently an early stage of the addin. As of now only the liquibase "update" command is supported. 
 The most important settings can be used via the LiquibaseSettings class. If you are missing settings, you can 
-use the LiquibaseSettings.OtherParameters property to define them as string.
+use the LiquibaseSettings.ArgumentCustomization property to define them as string. Details on how to use them can
+be found on the Cake website (ToolSettings).
+
 If you are missing a command or parameter feel free to send a pull request.
