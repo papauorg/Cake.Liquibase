@@ -15,6 +15,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="0.34.1" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="0.35.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
