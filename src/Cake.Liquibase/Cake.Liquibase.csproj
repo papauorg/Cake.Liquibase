@@ -2,8 +2,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Cake.Liquibase</PackageId>
-    <PackageVersion>0.1.9-preview</PackageVersion>
-    <Version>0.1.9-preview</Version>
+    <PackageVersion>0.1.10-preview</PackageVersion>
+    <Version>0.1.10-preview</Version>
     <Authors>Philipp Grathwohl</Authors>
     <Description>Addin for running liquibase database migrations with the Cake build system.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -15,6 +15,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="0.34.1" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="0.35.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
