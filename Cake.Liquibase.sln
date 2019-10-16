@@ -1,56 +1,38 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29403.142
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9832B36C-82F6-4EE8-B239-D2F27D41B4BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Liquibase", "src\Cake.Liquibase\Cake.Liquibase.csproj", "{AA10E00C-9438-4AD6-9029-13B712EA34A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Liquibase", "src\Cake.Liquibase\Cake.Liquibase.csproj", "{AA10E00C-9438-4AD6-9029-13B712EA34A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4A7D6041-ED9F-44B0-A57F-5CDA35D5CC02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Liquibase.Tests", "tests\Cake.Liquibase.Tests\Cake.Liquibase.Tests.csproj", "{595B38E8-E226-4346-B549-822057CD7153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Liquibase.Tests", "tests\Cake.Liquibase.Tests\Cake.Liquibase.Tests.csproj", "{595B38E8-E226-4346-B549-822057CD7153}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Debug|x64.ActiveCfg = Debug|x64
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Debug|x64.Build.0 = Debug|x64
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Debug|x86.ActiveCfg = Debug|x86
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Debug|x86.Build.0 = Debug|x86
 		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Release|x64.ActiveCfg = Release|x64
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Release|x64.Build.0 = Release|x64
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Release|x86.ActiveCfg = Release|x86
-		{AA10E00C-9438-4AD6-9029-13B712EA34A9}.Release|x86.Build.0 = Release|x86
 		{595B38E8-E226-4346-B549-822057CD7153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{595B38E8-E226-4346-B549-822057CD7153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{595B38E8-E226-4346-B549-822057CD7153}.Debug|x64.ActiveCfg = Debug|x64
-		{595B38E8-E226-4346-B549-822057CD7153}.Debug|x64.Build.0 = Debug|x64
-		{595B38E8-E226-4346-B549-822057CD7153}.Debug|x86.ActiveCfg = Debug|x86
-		{595B38E8-E226-4346-B549-822057CD7153}.Debug|x86.Build.0 = Debug|x86
 		{595B38E8-E226-4346-B549-822057CD7153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{595B38E8-E226-4346-B549-822057CD7153}.Release|Any CPU.Build.0 = Release|Any CPU
-		{595B38E8-E226-4346-B549-822057CD7153}.Release|x64.ActiveCfg = Release|x64
-		{595B38E8-E226-4346-B549-822057CD7153}.Release|x64.Build.0 = Release|x64
-		{595B38E8-E226-4346-B549-822057CD7153}.Release|x86.ActiveCfg = Release|x86
-		{595B38E8-E226-4346-B549-822057CD7153}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AA10E00C-9438-4AD6-9029-13B712EA34A9} = {9832B36C-82F6-4EE8-B239-D2F27D41B4BC}
 		{595B38E8-E226-4346-B549-822057CD7153} = {4A7D6041-ED9F-44B0-A57F-5CDA35D5CC02}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B422B131-4616-4AA7-9004-1BA77BD1B0AE}
 	EndGlobalSection
 EndGlobal

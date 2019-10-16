@@ -1,20 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Cake.Liquibase</PackageId>
-    <PackageVersion>0.1.8-preview</PackageVersion>
-    <Version>0.1.8</Version>
+    <PackageVersion>0.1.9-preview</PackageVersion>
+    <Version>0.1.9-preview</Version>
     <Authors>Philipp Grathwohl</Authors>
     <Description>Addin for running liquibase database migrations with the Cake build system.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>Copyright (c) Philipp Grathwohl</Copyright>
     <PackageTags>Cake Cakebuild Liquibase</PackageTags>
-    <PackageLicenseUrl>https://opensource.org/licenses/mit-license.php</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/papauorg/Cake.Liquibase</PackageProjectUrl>
     <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/papauorg/Cake.Liquibase</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="0.33.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="0.34.1" PrivateAssets="All" />
   </ItemGroup>
 </Project>
