@@ -4,7 +4,7 @@ pull_requests:
 image: Visual Studio 2019
 
 build_script:
-  - ps: ./build.ps1 -Target Pack
+  - ps: ./build.ps1 --Target Pack
 
 test_script:
 - sh: cd ./tests/BuildScript && ./build.sh
