@@ -18,4 +18,4 @@ deploy:
   api_key:
     secure: L+KXfvRzHCjSwuo4KSLy9CaMeWCnIM+5uVco7njYCTTIV8J6R7ReqzePoGTTr+vS
   on:
-    branch: master
+    branch: main
