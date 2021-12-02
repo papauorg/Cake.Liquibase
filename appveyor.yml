@@ -7,7 +7,7 @@ build_script:
   - sh: ./build.sh --target="Default"
 
 test_script:
-- sh: cd ./tests/BuildFile && ./build.sh
+- sh: cd ./tests/BuildFile && ./build.sh --verbosity=diagnostic
 
 artifacts:
 - path: BuildArtifacts/Package/*.*nupkg
