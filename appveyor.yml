@@ -1,10 +1,10 @@
 pull_requests:
   do_not_increment_build_number: true
 
-image: Visual Studio 2022
+image: Ubuntu
 
 build_script:
-  - ps: ./build.ps1 --Target Pack
+  - sh: ./build.sh --target="Pack"
 
 test_script:
 - sh: cd ./tests/BuildScript && ./build.sh
