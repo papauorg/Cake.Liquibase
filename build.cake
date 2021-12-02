@@ -6,13 +6,8 @@ Task("Clean")
         DotNetClean(solution);
     });
 
-Task("Restore")
-    .Does(() => {
-        DotNetRestore(solution);
-    });
-
 Task("Build")
-    .IsDependentOn("Restore")
+    .IsDependentOn("Clean")
     .Does(() => {
         var settings = new DotNetBuildSettings
         {
