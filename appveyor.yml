@@ -7,7 +7,7 @@ build_script:
   - sh: ./build.sh --target="Default"
 
 test_script:
-- sh: cd ./tests/BuildScript && ./build.sh
+- sh: cd ./tests/BuildFile && ./build.sh
 
 artifacts:
 - path: BuildArtifacts/Package/*.*nupkg
