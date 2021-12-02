@@ -236,7 +236,7 @@ _Pvt_Extensions
 .vscode/tasks.json
 
 # CAKE - C# Make
-tools
+[Tt]ools/
 
 # Build output artifacts
-output
+[Bb]uildArtifacts/

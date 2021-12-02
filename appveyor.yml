@@ -4,13 +4,13 @@ pull_requests:
 image: Ubuntu
 
 build_script:
-  - sh: ./build.sh --target="Pack"
+  - sh: ./build.sh --target="Default"
 
 test_script:
 - sh: cd ./tests/BuildScript && ./build.sh
 
 artifacts:
-- path: nuget/*.nupkg
+- path: BuildArtifacts/Package/*.*nupkg
   name: NuGet
 
 deploy:

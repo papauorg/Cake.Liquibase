@@ -1,4 +1,4 @@
-#reference "../../output/Cake.Liquibase.dll"
+#reference "../../src/Cake.Liquibase/bin/Release/net6.0/Cake.Liquibase.dll"
 
 var target = Argument("target", "Default");
 

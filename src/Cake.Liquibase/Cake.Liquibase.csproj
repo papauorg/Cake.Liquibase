@@ -10,9 +10,13 @@
     <Copyright>Copyright (c) Philipp Grathwohl</Copyright>
     <PackageTags>Cake Cakebuild Liquibase</PackageTags>
     <PackageProjectUrl>https://github.com/papauorg/Cake.Liquibase</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/papauorg/Cake.Liquibase</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Cake.Common" Version="1.0.0" PrivateAssets="All" />
@@ -20,4 +24,7 @@
   <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard2.0' ">
     <PackageReference Include="Cake.Common" Version="2.0.0" PrivateAssets="All" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\"/>
+</ItemGroup>
 </Project>
