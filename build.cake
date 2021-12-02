@@ -3,24 +3,24 @@ var solution = "./Cake.Liquibase.sln";
 
 Task("Clean")
     .Does(() => {
-        DotNetCoreClean(solution);
+        DotNetClean(solution);
     });
 
 Task("Restore")
     .Does(() => {
-        DotNetCoreRestore(solution);
+        DotNetRestore(solution);
     });
 
 Task("Build")
     .IsDependentOn("Restore")
     .Does(() => {
-        var settings = new DotNetCoreBuildSettings
+        var settings = new DotNetBuildSettings
         {
             Configuration = "Release",
             OutputDirectory = "./output/"
         };
 
-        DotNetCoreBuild(solution, settings);
+        DotNetBuild(solution, settings);
     });
 
 Task("Test")
@@ -30,14 +30,14 @@ Task("Test")
         var projectFiles = GetFiles("./tests/**/*.csproj");
         foreach(var file in projectFiles)
         {
-            DotNetCoreTest(file.FullPath);
+            DotNetTest(file.FullPath);
         }
     });
 
 Task("Pack")
     .IsDependentOn("Test")
     .Does(() => {
-        DotNetCorePack("./src/Cake.Liquibase/Cake.Liquibase.csproj", new DotNetCorePackSettings {
+        DotNetPack("./src/Cake.Liquibase/Cake.Liquibase.csproj", new DotNetPackSettings {
             OutputDirectory = "./nuget/",
             NoBuild = true
         });
