@@ -1,26 +1,31 @@
 var target = Argument("target", "Default");
 var solution = "./Cake.Liquibase.sln";
 
+var outputDirRoot = new DirectoryPath("./BuildArtifacts/").MakeAbsolute(Context.Environment);
+var outputDirPackage = outputDirRoot.Combine("Package");
+
 Task("Clean")
     .Does(() => {
-        DotNetCoreClean(solution);
-    });
-
-Task("Restore")
-    .Does(() => {
-        DotNetCoreRestore(solution);
+        EnsureDirectoryDoesNotExist(outputDirRoot, new DeleteDirectorySettings {
+			Recursive = true,
+			Force = true
+		});
+		CreateDirectory(outputDirRoot);	
     });
 
 Task("Build")
-    .IsDependentOn("Restore")
+    .IsDependentOn("Clean")
     .Does(() => {
-        var settings = new DotNetCoreBuildSettings
+        var msBuildSettings = new DotNetMSBuildSettings()
+            .WithProperty("PackageOutputPath", outputDirPackage.FullPath);	
+        
+        var settings = new DotNetBuildSettings
         {
             Configuration = "Release",
-            OutputDirectory = "./output/"
+            MSBuildSettings = msBuildSettings
         };
 
-        DotNetCoreBuild(solution, settings);
+        DotNetBuild(solution, settings);
     });
 
 Task("Test")
@@ -30,17 +35,8 @@ Task("Test")
         var projectFiles = GetFiles("./tests/**/*.csproj");
         foreach(var file in projectFiles)
         {
-            DotNetCoreTest(file.FullPath);
+            DotNetTest(file.FullPath);
         }
-    });
-
-Task("Pack")
-    .IsDependentOn("Test")
-    .Does(() => {
-        DotNetCorePack("./src/Cake.Liquibase/Cake.Liquibase.csproj", new DotNetCorePackSettings {
-            OutputDirectory = "./nuget/",
-            NoBuild = true
-        });
     });
 
 Task("Default")

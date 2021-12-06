@@ -1,15 +1,10 @@
-#reference "../../output/Cake.Liquibase.dll"
+#reference "../../src/Cake.Liquibase/bin/Release/net6.0/Cake.Liquibase.dll"
+#tool "nuget:?package=Liquibase.Cli&version=3.3.5&include=**/liquibase.jar"
 
 var target = Argument("target", "Default");
 
 Task("Default")
-    .Does(() => {
-        // Install Liquibase.Cli package for the liquibase executables (or include it in the packages.config) 
-        NuGetInstall("Liquibase.Cli", new NuGetInstallSettings {
-            Version  = "3.3.5",
-            OutputDirectory = "./tools"
-        });
-
+    .Does(() => {       
         UpdateDatabase(s => {
             s.ChangeLogFile = "TestChangeLog.xml";
             s.Url = "jdbc:sqlite:exampledb.sqlite";

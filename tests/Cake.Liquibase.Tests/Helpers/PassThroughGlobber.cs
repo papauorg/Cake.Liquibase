@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Cake.Core.IO;
+using System.Collections.Generic;
 
 namespace Cake.Liquibase.Tests.Helpers
 {
