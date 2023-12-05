@@ -44,4 +44,4 @@ jobs:
 
     - name: Publish Packages to nuget
       if: github.event_name == 'push'
-      run: dotnet nuget push nuget/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json 
+      run: dotnet nuget push BuildArtifacts/Package/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json 
