@@ -1,9 +1,7 @@
 # Cake.Liquibase
 Addin for running liquibase database migrations with the Cake build system.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/7e29fhkr58m8akf0?svg=true)](https://ci.appveyor.com/project/papauorg/cake-liquibase)
-
-[![NuGet](https://img.shields.io/nuget/v/Cake.Liquibase.svg)](https://www.nuget.org/packages/Cake.Liquibase/0.1.0-preview)
+[![NuGet](https://img.shields.io/nuget/v/Cake.Liquibase.svg)](https://www.nuget.org/packages/Cake.Liquibase)
 
 ## Dependencies
 Please note that neither the required Java Runtime Environment (JRE) nor the liquibase executables are provided with this
