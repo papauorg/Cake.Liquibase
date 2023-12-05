@@ -18,7 +18,7 @@ Task("Clean")
 Task("Build")
     .IsDependentOn("Clean")
     .Does(() => {
-        var msBuildSettings = new DotNetMSBuildSettings()
+        var msBuildSettings = new DotNetMSBuildSettings();
         msBuildSettings.PackageVersion = version;
         msBuildSettings.WithProperty("PackageOutputPath", outputDirPackage.FullPath);
         
