@@ -1,4 +1,6 @@
 var target = Argument("target", "Default");
+var version = Argument("packageVersion", "0.0.1");
+
 var solution = "./Cake.Liquibase.sln";
 
 var outputDirRoot = new DirectoryPath("./BuildArtifacts/").MakeAbsolute(Context.Environment);
@@ -17,7 +19,8 @@ Task("Build")
     .IsDependentOn("Clean")
     .Does(() => {
         var msBuildSettings = new DotNetMSBuildSettings()
-            .WithProperty("PackageOutputPath", outputDirPackage.FullPath);	
+        msBuildSettings.PackageVersion = version;
+        msBuildSettings.WithProperty("PackageOutputPath", outputDirPackage.FullPath);
         
         var settings = new DotNetBuildSettings
         {
