@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <PackageId>Cake.Liquibase</PackageId>
     <PackageVersion>0.1.13-preview</PackageVersion>
     <Version>0.1.13-preview</Version>
@@ -21,10 +21,10 @@
   </PropertyGroup>
 	
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="4.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="5.0.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\"/>
-    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
 </ItemGroup>
 </Project>
