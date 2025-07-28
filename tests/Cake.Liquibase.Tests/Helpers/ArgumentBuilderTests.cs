@@ -28,7 +28,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new LiquibaseSettings(), 
                     new FilePath("someFile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().EndWith("update");
             }
@@ -45,7 +45,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings,    
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().StartWith("-cp \"some/path/file.jar");
             }
@@ -64,7 +64,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings,    
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("-cp \"somefile.jar\""); // only contain the jar file, but nothing else in the -cp parameter
             }
@@ -80,7 +80,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings,
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("-cp \"somefile.jar\"");
             }
@@ -97,7 +97,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings,    
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("-Dsome.java.option=1");
             }
@@ -115,7 +115,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings,    
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
                 
                 arguments.Should()
                     .StartWith("-cp \"some/file.jar")
@@ -131,7 +131,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     new LiquibaseSettings(), 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain(ArgumentBuilder.LIQUIBASE_ENTRY_POINT);
             }
@@ -148,7 +148,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--username=\"user\"");
             }
@@ -165,7 +165,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--password=\"password\"");
             }
@@ -182,7 +182,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--changeLogFile=\"./ChangeLog.xml\"");
             }
@@ -199,7 +199,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--url=\"jdbc:sqlserver://server:1433;property=value");
             }
@@ -216,7 +216,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--contexts=\"production\"");
             }
@@ -233,7 +233,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--contexts=\"production,test\"");
             }
@@ -250,7 +250,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--defaultSchemaName=\"dbo\"");
             }
@@ -267,7 +267,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().Contain("--defaultsFile=\"./defaults.properties\"");
             }
@@ -282,7 +282,7 @@ namespace Cake.Liquibase.Tests.Helpers
                     settings, 
                     new FilePath("somefile.jar"),
                     _globber
-                ).Build();
+                ).Prepare().Render();
 
                 arguments.Should().NotContain("--changeLogFile");
                 arguments.Should().NotContain("--username");

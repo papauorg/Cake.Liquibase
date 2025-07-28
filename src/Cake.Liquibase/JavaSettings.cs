@@ -13,11 +13,6 @@ namespace Cake.Liquibase
         }
 
         /// <summary>
-        /// Defines where the java executable can be found. 
-        /// </summary>
-        public string Executable {get; set;}
-
-        /// <summary>
         /// Class path that should be added to the liquibase call. Defaults to ".".
         /// </summary>
         /// <returns></returns>

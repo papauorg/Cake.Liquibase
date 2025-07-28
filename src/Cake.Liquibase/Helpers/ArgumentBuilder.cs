@@ -26,7 +26,8 @@ namespace Cake.Liquibase.Helpers
             LiquibaseJar = liquibaseJar ?? throw new ArgumentNullException(nameof(liquibaseJar));
         }
 
-        public string Build()
+
+        public ProcessArgumentBuilder Prepare()
         {
             var argumentBuilder = new ProcessArgumentBuilder();
 
@@ -35,7 +36,7 @@ namespace Cake.Liquibase.Helpers
             AppendCommandLineArgs(argumentBuilder);
             argumentBuilder.Append(Command.ToString());
 
-            return argumentBuilder.Render();
+            return argumentBuilder;
         }
 
         private void AppendJavaOptions(ProcessArgumentBuilder builder)
