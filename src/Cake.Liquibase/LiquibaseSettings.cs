@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
 
@@ -23,8 +25,8 @@ namespace Cake.Liquibase
         /// Defines additional JavaSettings for the jvm that are included in the command line
         /// </summary>
         /// <returns></returns>
-        public JavaSettings JavaSettings {get; private set; }
-        
+        public JavaSettings JavaSettings { get; private set; }
+
         /// <summary>
         /// Changelog file that should be used
         /// </summary>
@@ -42,7 +44,7 @@ namespace Cake.Liquibase
         /// </summary>
         /// <returns></returns>
         public string Password { get; set; }
-        
+
         /// <summary>
         /// JDBC Url
         /// </summary>
@@ -54,7 +56,7 @@ namespace Cake.Liquibase
         /// </summary>
         /// <returns></returns>
         public string DriverClassName { get; set; }
-        
+
         /// <summary>
         /// Defines the defaults properties file liquibase should use
         /// </summary>
@@ -65,12 +67,17 @@ namespace Cake.Liquibase
         /// Defines the default schema liquibase should use
         /// </summary>
         /// <returns></returns>
-        public string DefaultSchemaName {get; set; }
+        public string DefaultSchemaName { get; set; }
 
         /// <summary>
         /// Liquibase contexts
         /// </summary>
         /// <returns></returns>
-        public List<string> Contexts {get; private set; }
+        public List<string> Contexts { get; private set; }
+
+        /// <summary>
+        /// Provides argument customization for the cliquibase main command.
+        /// </summary>
+        public Func<ProcessArgumentBuilder, ProcessArgumentBuilder> LiquibaseArgumentCustomization { get; set; }
     }
 }
