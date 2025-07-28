@@ -1,4 +1,5 @@
 ﻿using System;
+using Cake.Common.IO;
 using Cake.Core;
 using Cake.Core.Annotations;
 using Cake.Core.Diagnostics;
@@ -21,16 +22,10 @@ namespace Cake.Liquibase
         /// <param name="liquibaseSettings">The liquibase settings and arguments for running liquibase.</param>
         /// <returns>Liquibase return code</returns>
         [CakeMethodAlias]
-        public static int UpdateDatabase(this ICakeContext context, LiquibaseSettings liquibaseSettings)
+        public static void UpdateDatabase(this ICakeContext context, LiquibaseSettings liquibaseSettings)
         {
-            var result =  new LiquibaseRunner(context.ProcessRunner, context.Log, context.Tools, context.Globber, context.Environment.Platform)
+            new LiquibaseTool(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Globber, context.Log)
                 .Start(Commands.Update, liquibaseSettings);
-
-            if (result != 0)
-            {
-                throw new InvalidOperationException("Error running liquibase");
-            }
-            return result;
         }
 
         /// <summary>
@@ -39,16 +34,12 @@ namespace Cake.Liquibase
         /// <param name="liquibaseSettingsAction">An action that lets you modify the default liquibase settings.</param>
         /// <returns>Liquibase return code</returns>
         [CakeMethodAlias]
-        public static int UpdateDatabase(this ICakeContext context, Action<LiquibaseSettings> liquibaseSettingsAction)
+        public static void UpdateDatabase(this ICakeContext context, Action<LiquibaseSettings> liquibaseSettingsAction)
         {
             var liquibaseSettings = new LiquibaseSettings();
+            liquibaseSettingsAction?.Invoke(liquibaseSettings);
 
-            if (liquibaseSettingsAction != null) 
-            {
-                liquibaseSettingsAction(liquibaseSettings);
-            }
-
-            return UpdateDatabase(context, liquibaseSettings);
+            UpdateDatabase(context, liquibaseSettings);
         }
     }
 }
