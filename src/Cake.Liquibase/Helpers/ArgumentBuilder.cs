@@ -86,8 +86,6 @@ namespace Cake.Liquibase.Helpers
             builder.AppendQuotedIfNotEmpty("--contexts", String.Join(",", Settings.Contexts));
             builder.AppendQuotedIfNotEmpty("--defaultSchemaName", Settings.DefaultSchemaName);
             builder.AppendQuotedIfNotEmpty("--defaultsFile", Settings.DefaultsFile);
-
-            Settings.ArgumentCustomization?.Invoke(builder);
         }
     }
 
