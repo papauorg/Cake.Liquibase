@@ -1,4 +1,4 @@
-#reference "../../src/Cake.Liquibase/bin/Release/net9.0/Cake.Liquibase.dll"
+#reference "../../src/Cake.Liquibase/bin/Release/net10.0/Cake.Liquibase.dll"
 #tool "nuget:?package=Liquibase.Cli&version=3.3.5&include=**/liquibase.jar"
 
 var target = Argument("target", "Default");
