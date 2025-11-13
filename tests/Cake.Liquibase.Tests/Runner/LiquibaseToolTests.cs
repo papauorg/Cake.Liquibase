@@ -3,11 +3,10 @@ using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
-using Cake.Liquibase.Runner;
 using Cake.Liquibase.Runner.LiquibaseCommands;
 using Cake.Liquibase.Tests.Helpers;
-using FluentAssertions;
 using NSubstitute;
+using Shouldly;
 using Xunit;
 
 namespace Cake.Liquibase.Tests
@@ -16,7 +15,7 @@ namespace Cake.Liquibase.Tests
     {
         protected LiquibaseTool _runner;
         protected LiquibaseSettings _settings;
-        
+
         protected IProcessRunner _processRunner;
         protected ICakeLog _cakeLog;
         protected IToolLocator _cakeTools;
@@ -32,7 +31,7 @@ namespace Cake.Liquibase.Tests
             _cakeLog = Substitute.For<ICakeLog>();
             _cakeTools = Substitute.For<IToolLocator>();
             _globber = new PassThroughGlobber();
-    
+
             _settings = new LiquibaseSettings();
             _runner = new LiquibaseTool(_fileSystem, _environment, _processRunner, _cakeTools, _globber, _cakeLog);
         }
@@ -43,7 +42,7 @@ namespace Cake.Liquibase.Tests
             public void Throws_If_LiquibaseSettings_Is_Null()
             {
                 Action startCall = () => _runner.Start(Commands.Update, null);
-                startCall.Should().Throw<ArgumentNullException>();
+                startCall.ShouldThrow<ArgumentNullException>();
             }
         }
     }
